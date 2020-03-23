@@ -15,7 +15,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="SriLanka Health Info"
+        android:label="SL Health Info"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -31,7 +31,7 @@
                  there is no splash screen (such as the default splash screen
                  defined in @style/LaunchTheme). -->
             <meta-data
-                android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"
+                android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"                
                 android:value="true" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -41,6 +41,8 @@
                 <action android:name="FLUTTER_NOTIFICATION_CLICK" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
+     
         </activity>
     </application>
 </manifest>
