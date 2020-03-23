@@ -78,7 +78,7 @@ class _MainPageState extends State<MainPage> {
         appBar: AppBar(
           elevation: 5.0,
           backgroundColor: Colors.white,
-          title: Text('COVID19 Updates - Sri Lanka',
+          title: Text('SriLanka Health Info',
               style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w600,
