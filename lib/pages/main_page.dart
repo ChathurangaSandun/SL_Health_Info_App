@@ -3,6 +3,7 @@ import 'package:dashboard/classes/stat-result.dart';
 import 'package:dashboard/classes/time_series_count.dart';
 import 'package:dashboard/utils/api_service.dart';
 import 'package:dashboard/widgets/simple_time_seriesc_chart%20.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
@@ -15,6 +16,11 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  String _homeScreenText = "Waiting for token...";
+  String _messageText = "Waiting for message...";
+
+  
   Data _coronaData = new Data();
   List<TimeSeriesCount> _coronaDailyCases = new List<TimeSeriesCount>();
   List<TimeSeriesCount> _coronaDailyDeaths = new List<TimeSeriesCount>();
@@ -33,6 +39,42 @@ class _MainPageState extends State<MainPage> {
     // call to get data from rest api
     _fetchCoronaStats();
     _fetchCoronaCounts();
+
+     _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        setState(() {
+          _messageText = "Push Messaging message: $message";
+        });
+        print("onMessage: $message");
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        setState(() {
+          _messageText = "Push Messaging message: $message";
+        });
+        print("onLaunch: $message");
+      },
+      onResume: (Map<String, dynamic> message) async {
+        setState(() {
+          _messageText = "Push Messaging message: $message";
+        });
+        print("onResume: $message");
+      },
+    );
+
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      setState(() {
+        _homeScreenText = "Push Messaging token: $token";
+      });
+      print(_homeScreenText);
+    });
+
     super.initState();
   }
 
