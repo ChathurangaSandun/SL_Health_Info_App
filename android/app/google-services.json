@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "332883334058",
-    "firebase_url": "https://covid19-updates-srilanka.firebaseio.com",
-    "project_id": "covid19-updates-srilanka",
-    "storage_bucket": "covid19-updates-srilanka.appspot.com"
+    "project_number": "754127111955",
+    "firebase_url": "https://situation-sl.firebaseio.com",
+    "project_id": "situation-sl",
+    "storage_bucket": "situation-sl.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:332883334058:android:f66140a57a9bce98aad1d3",
+        "mobilesdk_app_id": "1:754127111955:android:59b5b0c5adae058f80fce6",
         "android_client_info": {
-          "package_name": "com.clivekumara.slcovid19updates"
+          "package_name": "com.clivekumara.situationsl"
         }
       },
       "oauth_client": [
         {
-          "client_id": "332883334058-p5q5vbh50f9qu248qt0kipfs2c9j66nj.apps.googleusercontent.com",
+          "client_id": "754127111955-sv4qj7d4d6nb4ka5t2e3h7nlipisqcjm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA4FBJPVD4lk5F-4jJfMALLAXKCy7oWH2c"
+          "current_key": "AIzaSyCFrlEIMSm0wpKXqhvs5BBvJfQ3RLzCTvQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "332883334058-p5q5vbh50f9qu248qt0kipfs2c9j66nj.apps.googleusercontent.com",
+              "client_id": "754127111955-sv4qj7d4d6nb4ka5t2e3h7nlipisqcjm.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
