@@ -20,6 +20,7 @@ class _MainPageState extends State<MainPage> {
   String _messageText = "";
   bool isLoadingGovApi = false;
   bool isLoadStatApi = false;
+  String updatedTime = '';
 
   Data _coronaData = new Data();
   List<TimeSeriesCount> _coronaDailyCases = new List<TimeSeriesCount>();
@@ -73,8 +74,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    final updatedTime =
-        (!this.isLoadingGovApi ? _coronaData.updateDateTime : '');
     return Scaffold(
         appBar: AppBar(
           elevation: 5.0,
@@ -120,7 +119,7 @@ class _MainPageState extends State<MainPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                              'Sri Lanka Health Promotion Bureau - @  $updatedTime',
+                              'Sri Lanka Health Promotion Bureau - @$updatedTime',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w600,
@@ -240,7 +239,7 @@ class _MainPageState extends State<MainPage> {
                     children: !isLoadingGovApi
                         ? <Widget>[
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Center(
@@ -319,16 +318,28 @@ class _MainPageState extends State<MainPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Grid Of Total Deaths',
-                                  style: TextStyle(color: Colors.red)),
-                            ],
-                          ),
-                        ],
+                        children: !isLoadingGovApi
+                            ? <Widget>[
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  ],
+                                ),
+                              ]
+                            : <Widget>[
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text('Grid Of Total Deaths',
+                                        style: TextStyle(color: Colors.red)),
+                                  ],
+                                ),
+                              ],
                       ),
                       Padding(padding: EdgeInsets.only(bottom: 4.0)),
                       TimeSeriesPersonChart(_createDeathsData())
@@ -384,16 +395,28 @@ class _MainPageState extends State<MainPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Grid Of Total Recovers',
-                                  style: TextStyle(color: Colors.green)),
-                            ],
-                          ),
-                        ],
+                        children: !isLoadingGovApi
+                            ? <Widget>[
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  ],
+                                ),
+                              ]
+                            : <Widget>[
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text('Grid Of Total Recovers',
+                                        style: TextStyle(color: Colors.green)),
+                                  ],
+                                ),
+                              ],
                       ),
                       Padding(padding: EdgeInsets.only(bottom: 4.0)),
                       TimeSeriesPersonChart(_createRecoversData())
@@ -477,6 +500,7 @@ class _MainPageState extends State<MainPage> {
     new ApiService().fetchCoronaData().then((Data value) {
       setState(() {
         this._coronaData = value;
+        this.updatedTime = value.updateDateTime;
         this.isLoadingGovApi = true;
       });
     });
