@@ -4,9 +4,10 @@ description: A new Flutter project.
 dependencies:
   flutter:
     sdk: flutter
-
-  flutter_sparkline: "^0.1.0"
+  
   flutter_staggered_grid_view: "^0.3.0"
+  charts_flutter: ^0.9.0
+
 
   http: ^0.12.0+4
 

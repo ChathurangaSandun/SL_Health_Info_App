@@ -1,27 +1,59 @@
 class StatResult {
-  int id;
-  String recordDate;
-  int count;
-  String type;
-  String category;
+  List<Records> records;
 
-  StatResult({this.id, this.recordDate, this.count, this.type, this.category});
+  StatResult({this.records});
 
   StatResult.fromJson(Map<String, dynamic> json) {
+    if (json['records'] != null) {
+      records = new List<Records>();
+      json['records'].forEach((v) {
+        records.add(new Records.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.records != null) {
+      data['records'] = this.records.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Records {
+  int id;
+  String recordDate;
+  int casesCount;
+  int deathCount;
+  int recoverCount;
+  int suspectCount;
+
+  Records(
+      {this.id,
+      this.recordDate,
+      this.casesCount,
+      this.deathCount,
+      this.recoverCount,
+      this.suspectCount});
+
+  Records.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     recordDate = json['recordDate'];
-    count = json['count'];
-    type = json['type'];
-    category = json['category'];
+    casesCount = json['casesCount'];
+    deathCount = json['deathCount'];
+    recoverCount = json['recoverCount'];
+    suspectCount = json['suspectCount'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['recordDate'] = this.recordDate;
-    data['count'] = this.count;
-    data['type'] = this.type;
-    data['category'] = this.category;
+    data['casesCount'] = this.casesCount;
+    data['deathCount'] = this.deathCount;
+    data['recoverCount'] = this.recoverCount;
+    data['suspectCount'] = this.suspectCount;
     return data;
   }
 }

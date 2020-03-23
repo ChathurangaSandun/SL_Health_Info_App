@@ -20,13 +20,14 @@ class ApiService {
     return null;
   }
 
-  Future<List<StatResult>> fetchCoronaStat() async {
+  Future<List<Records>> fetchCoronaStat() async {
     final response = await get(staticUrl);
+    print( json.decode(response.body));
     if (response.statusCode == 200) {
       final jsonResult = json.decode(response.body);
-      print(jsonResult);
-      final data =  StatResult.fromJson(jsonResult);
-      return null;
+      //print(jsonResult);
+      final data =  StatResult.fromJson(jsonResult).records;
+      return data;
     }
 
     return null;

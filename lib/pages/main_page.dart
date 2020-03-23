@@ -1,9 +1,11 @@
 import 'package:dashboard/classes/corona_result.dart';
 import 'package:dashboard/classes/stat-result.dart';
+import 'package:dashboard/classes/time_series_count.dart';
 import 'package:dashboard/utils/api_service.dart';
+import 'package:dashboard/widgets/simple_time_seriesc_chart%20.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'shop_items_page.dart';
 
@@ -14,213 +16,9 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   Data _coronaData = new Data();
-
-  final List<List<double>> charts = [
-    [
-      0.0,
-      0.3,
-      0.7,
-      0.6,
-      0.55,
-      0.8,
-      1.2,
-      1.3,
-      1.35,
-      0.9,
-      1.5,
-      1.7,
-      1.8,
-      1.7,
-      1.2,
-      0.8,
-      1.9,
-      2.0,
-      2.2,
-      1.9,
-      2.2,
-      2.1,
-      2.0,
-      2.3,
-      2.4,
-      2.45,
-      2.6,
-      3.6,
-      2.6,
-      2.7,
-      2.9,
-      2.8,
-      3.4
-    ],
-    [
-      0.0,
-      0.3,
-      0.7,
-      0.6,
-      0.55,
-      0.8,
-      1.2,
-      1.3,
-      1.35,
-      0.9,
-      1.5,
-      1.7,
-      1.8,
-      1.7,
-      1.2,
-      0.8,
-      1.9,
-      2.0,
-      2.2,
-      1.9,
-      2.2,
-      2.1,
-      2.0,
-      2.3,
-      2.4,
-      2.45,
-      2.6,
-      3.6,
-      2.6,
-      2.7,
-      2.9,
-      2.8,
-      3.4,
-      0.0,
-      0.3,
-      0.7,
-      0.6,
-      0.55,
-      0.8,
-      1.2,
-      1.3,
-      1.35,
-      0.9,
-      1.5,
-      1.7,
-      1.8,
-      1.7,
-      1.2,
-      0.8,
-      1.9,
-      2.0,
-      2.2,
-      1.9,
-      2.2,
-      2.1,
-      2.0,
-      2.3,
-      2.4,
-      2.45,
-      2.6,
-      3.6,
-      2.6,
-      2.7,
-      2.9,
-      2.8,
-      3.4,
-    ],
-    [
-      0.0,
-      0.3,
-      0.7,
-      0.6,
-      0.55,
-      0.8,
-      1.2,
-      1.3,
-      1.35,
-      0.9,
-      1.5,
-      1.7,
-      1.8,
-      1.7,
-      1.2,
-      0.8,
-      1.9,
-      2.0,
-      2.2,
-      1.9,
-      2.2,
-      2.1,
-      2.0,
-      2.3,
-      2.4,
-      2.45,
-      2.6,
-      3.6,
-      2.6,
-      2.7,
-      2.9,
-      2.8,
-      3.4,
-      0.0,
-      0.3,
-      0.7,
-      0.6,
-      0.55,
-      0.8,
-      1.2,
-      1.3,
-      1.35,
-      0.9,
-      1.5,
-      1.7,
-      1.8,
-      1.7,
-      1.2,
-      0.8,
-      1.9,
-      2.0,
-      2.2,
-      1.9,
-      2.2,
-      2.1,
-      2.0,
-      2.3,
-      2.4,
-      2.45,
-      2.6,
-      3.6,
-      2.6,
-      2.7,
-      2.9,
-      2.8,
-      3.4,
-      0.0,
-      0.3,
-      0.7,
-      0.6,
-      0.55,
-      0.8,
-      1.2,
-      1.3,
-      1.35,
-      0.9,
-      1.5,
-      1.7,
-      1.8,
-      1.7,
-      1.2,
-      0.8,
-      1.9,
-      2.0,
-      2.2,
-      1.9,
-      2.2,
-      2.1,
-      2.0,
-      2.3,
-      2.4,
-      2.45,
-      2.6,
-      3.6,
-      2.6,
-      2.7,
-      2.9,
-      2.8,
-      3.4
-    ]
-  ];
+  List<TimeSeriesCount> _coronaDailyCases = new List<TimeSeriesCount>();
+  List<TimeSeriesCount> _coronaDailyDeaths = new List<TimeSeriesCount>();
+  List<TimeSeriesCount> _coronaDailyRecovers = new List<TimeSeriesCount>();
 
   static final List<String> chartDropdownItems = [
     'Last 7 days',
@@ -232,11 +30,10 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void initState() {
-    super.initState();
-
     // call to get data from rest api
-    //_fetchCoronaStats();
+    _fetchCoronaStats();
     _fetchCoronaCounts();
+    super.initState();
   }
 
   @override
@@ -245,7 +42,7 @@ class _MainPageState extends State<MainPage> {
         appBar: AppBar(
           elevation: 5.0,
           backgroundColor: Colors.white,
-          title: Text('COVID19' ' Updates - Sri Lanka',
+          title: Text('COVID19 Updates - Sri Lanka',
               style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w600,
@@ -398,59 +195,32 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
 
-            // _buildTile(
-            //   Padding(
-            //       padding: const EdgeInsets.all(24.0),
-            //       child: Column(
-            //         mainAxisAlignment: MainAxisAlignment.start,
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: <Widget>[
-            //           Row(
-            //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //             crossAxisAlignment: CrossAxisAlignment.start,
-            //             children: <Widget>[
-            //               Column(
-            //                 mainAxisAlignment: MainAxisAlignment.start,
-            //                 crossAxisAlignment: CrossAxisAlignment.start,
-            //                 children: <Widget>[
-            //                   Text('Grid Of Total Cases',
-            //                       style: TextStyle(color: Colors.green)),
-            //                   Text('\$16K',
-            //                       style: TextStyle(
-            //                           color: Colors.black,
-            //                           fontWeight: FontWeight.w700,
-            //                           fontSize: 34.0)),
-            //                 ],
-            //               ),
-            //               DropdownButton(
-            //                   isDense: true,
-            //                   value: actualDropdown,
-            //                   onChanged: (String value) => setState(() {
-            //                         actualDropdown = value;
-            //                         actualChart = chartDropdownItems
-            //                             .indexOf(value); // Refresh the chart
-            //                       }),
-            //                   items: chartDropdownItems.map((String title) {
-            //                     return DropdownMenuItem(
-            //                       value: title,
-            //                       child: Text(title,
-            //                           style: TextStyle(
-            //                               color: Colors.blue,
-            //                               fontWeight: FontWeight.w400,
-            //                               fontSize: 14.0)),
-            //                     );
-            //                   }).toList())
-            //             ],
-            //           ),
-            //           Padding(padding: EdgeInsets.only(bottom: 4.0)),
-            //           Sparkline(
-            //             data: charts[actualChart],
-            //             lineWidth: 5.0,
-            //             lineColor: Colors.greenAccent,
-            //           )
-            //         ],
-            //       )),
-            // ),
+            _buildTile(
+              Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text('Grid Of Total Cases',
+                                  style: TextStyle(color: Colors.blue)),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Padding(padding: EdgeInsets.only(bottom: 4.0)),
+                      TimeSeriesPersonChart(_createCasesData())
+                    ],
+                  )),
+            ),
 
             SizedBox(height: 20),
 
@@ -491,59 +261,32 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
 
-            // _buildTile(
-            //   Padding(
-            //       padding: const EdgeInsets.all(24.0),
-            //       child: Column(
-            //         mainAxisAlignment: MainAxisAlignment.start,
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: <Widget>[
-            //           Row(
-            //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //             crossAxisAlignment: CrossAxisAlignment.start,
-            //             children: <Widget>[
-            //               Column(
-            //                 mainAxisAlignment: MainAxisAlignment.start,
-            //                 crossAxisAlignment: CrossAxisAlignment.start,
-            //                 children: <Widget>[
-            //                   Text('Grid Of Total Cases',
-            //                       style: TextStyle(color: Colors.green)),
-            //                   Text('\$16K',
-            //                       style: TextStyle(
-            //                           color: Colors.black,
-            //                           fontWeight: FontWeight.w700,
-            //                           fontSize: 34.0)),
-            //                 ],
-            //               ),
-            //               DropdownButton(
-            //                   isDense: true,
-            //                   value: actualDropdown,
-            //                   onChanged: (String value) => setState(() {
-            //                         actualDropdown = value;
-            //                         actualChart = chartDropdownItems
-            //                             .indexOf(value); // Refresh the chart
-            //                       }),
-            //                   items: chartDropdownItems.map((String title) {
-            //                     return DropdownMenuItem(
-            //                       value: title,
-            //                       child: Text(title,
-            //                           style: TextStyle(
-            //                               color: Colors.blue,
-            //                               fontWeight: FontWeight.w400,
-            //                               fontSize: 14.0)),
-            //                     );
-            //                   }).toList())
-            //             ],
-            //           ),
-            //           Padding(padding: EdgeInsets.only(bottom: 4.0)),
-            //           Sparkline(
-            //             data: charts[actualChart],
-            //             lineWidth: 5.0,
-            //             lineColor: Colors.greenAccent,
-            //           )
-            //         ],
-            //       )),
-            // ),
+            _buildTile(
+              Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text('Grid Of Total Deaths',
+                                  style: TextStyle(color: Colors.red)),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Padding(padding: EdgeInsets.only(bottom: 4.0)),
+                      TimeSeriesPersonChart(_createDeathsData())
+                    ],
+                  )),
+            ),
 
             SizedBox(height: 20),
             // total recovered
@@ -583,59 +326,33 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
 
-            // _buildTile(
-            //   Padding(
-            //       padding: const EdgeInsets.all(24.0),
-            //       child: Column(
-            //         mainAxisAlignment: MainAxisAlignment.start,
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: <Widget>[
-            //           Row(
-            //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //             crossAxisAlignment: CrossAxisAlignment.start,
-            //             children: <Widget>[
-            //               Column(
-            //                 mainAxisAlignment: MainAxisAlignment.start,
-            //                 crossAxisAlignment: CrossAxisAlignment.start,
-            //                 children: <Widget>[
-            //                   Text('Grid Of Total Cases',
-            //                       style: TextStyle(color: Colors.green)),
-            //                   Text('\$16K',
-            //                       style: TextStyle(
-            //                           color: Colors.black,
-            //                           fontWeight: FontWeight.w700,
-            //                           fontSize: 34.0)),
-            //                 ],
-            //               ),
-            //               DropdownButton(
-            //                   isDense: true,
-            //                   value: actualDropdown,
-            //                   onChanged: (String value) => setState(() {
-            //                         actualDropdown = value;
-            //                         actualChart = chartDropdownItems
-            //                             .indexOf(value); // Refresh the chart
-            //                       }),
-            //                   items: chartDropdownItems.map((String title) {
-            //                     return DropdownMenuItem(
-            //                       value: title,
-            //                       child: Text(title,
-            //                           style: TextStyle(
-            //                               color: Colors.blue,
-            //                               fontWeight: FontWeight.w400,
-            //                               fontSize: 14.0)),
-            //                     );
-            //                   }).toList())
-            //             ],
-            //           ),
-            //           Padding(padding: EdgeInsets.only(bottom: 4.0)),
-            //           Sparkline(
-            //             data: charts[actualChart],
-            //             lineWidth: 5.0,
-            //             lineColor: Colors.greenAccent,
-            //           )
-            //         ],
-            //       )),
-            // ),
+            _buildTile(
+              Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text('Grid Of Total Recovers',
+                                  style: TextStyle(color: Colors.green)),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Padding(padding: EdgeInsets.only(bottom: 4.0)),
+                      TimeSeriesPersonChart(_createRecoversData())
+                    ],
+                  )),
+            ),
+
             _buildTile(
               Padding(
                 padding: const EdgeInsets.all(24.0),
@@ -678,13 +395,13 @@ class _MainPageState extends State<MainPage> {
             StaggeredTile.extent(1, 200.0),
             StaggeredTile.extent(2, 10.0),
             StaggeredTile.extent(2, 150.0),
-            //StaggeredTile.extent(2, 220.0),
+            StaggeredTile.extent(2, 220.0),
             StaggeredTile.extent(2, 10.0),
             StaggeredTile.extent(2, 150.0),
-            //StaggeredTile.extent(2, 220.0),
+            StaggeredTile.extent(2, 250.0),
             StaggeredTile.extent(2, 10.0),
             StaggeredTile.extent(2, 150.0),
-            //StaggeredTile.extent(2, 220.0),
+            StaggeredTile.extent(2, 250.0),
             //StaggeredTile.extent(2, 110.0),
           ],
         ));
@@ -714,15 +431,69 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _fetchCoronaStats() {
-    new ApiService().fetchCoronaStat().then((List<StatResult> value) {
-      print(value);
-      setState(() {
-        // this._coronaData = value;
-      });
+    new ApiService().fetchCoronaStat().then((List<Records> value) {
+      List<TimeSeriesCount> casesdata = new List<TimeSeriesCount>();
+      List<TimeSeriesCount> deathsdata = new List<TimeSeriesCount>();
+      List<TimeSeriesCount> recoversdata = new List<TimeSeriesCount>();
+
+      if (value != null) {
+        value.forEach((daily) {
+          casesdata.add(new TimeSeriesCount(
+              DateTime.parse(daily.recordDate), daily.casesCount));
+
+          deathsdata.add(new TimeSeriesCount(
+              DateTime.parse(daily.recordDate), daily.deathCount));
+
+          recoversdata.add(new TimeSeriesCount(
+              DateTime.parse(daily.recordDate), daily.recoverCount));
+        });
+
+        setState(() {
+          this._coronaDailyCases = casesdata;
+          this._coronaDailyDeaths = deathsdata;
+          this._coronaDailyRecovers = recoversdata;
+        });
+      }
     });
   }
 
-  void printString(){
-    print('hello world');
+  void printString() {
+    print("hello world");
+  }
+
+  List<charts.Series<TimeSeriesCount, DateTime>> _createCasesData() {
+    return [
+      new charts.Series<TimeSeriesCount, DateTime>(
+        id: 'Corona Cases',
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (TimeSeriesCount cases, _) => cases.time,
+        measureFn: (TimeSeriesCount cases, _) => cases.count,
+        data: this._coronaDailyCases,
+      )
+    ];
+  }
+
+  List<charts.Series<TimeSeriesCount, DateTime>> _createDeathsData() {
+    return [
+      new charts.Series<TimeSeriesCount, DateTime>(
+        id: 'Corona_Deaths',
+        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        domainFn: (TimeSeriesCount cases, _) => cases.time,
+        measureFn: (TimeSeriesCount cases, _) => cases.count,
+        data: this._coronaDailyDeaths,
+      )
+    ];
+  }
+
+  List<charts.Series<TimeSeriesCount, DateTime>> _createRecoversData() {
+    return [
+      new charts.Series<TimeSeriesCount, DateTime>(
+        id: 'Corona_Recovers',
+        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        domainFn: (TimeSeriesCount cases, _) => cases.time,
+        measureFn: (TimeSeriesCount cases, _) => cases.count,
+        data: this._coronaDailyRecovers,
+      )
+    ];
   }
 }
