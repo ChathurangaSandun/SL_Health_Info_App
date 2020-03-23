@@ -17,10 +17,10 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  String _homeScreenText = "Waiting for token...";
-  String _messageText = "Waiting for message...";
+  String _messageText = "";
+  bool isLoadingGovApi = false;
+  bool isLoadStatApi = false;
 
-  
   Data _coronaData = new Data();
   List<TimeSeriesCount> _coronaDailyCases = new List<TimeSeriesCount>();
   List<TimeSeriesCount> _coronaDailyDeaths = new List<TimeSeriesCount>();
@@ -40,12 +40,9 @@ class _MainPageState extends State<MainPage> {
     _fetchCoronaStats();
     _fetchCoronaCounts();
 
-     _firebaseMessaging.configure(
+    _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
-        setState(() {
-          _messageText = "Push Messaging message: $message";
-        });
-        print("onMessage: $message");
+        _fetchCoronaCounts();
       },
       onLaunch: (Map<String, dynamic> message) async {
         setState(() {
@@ -68,11 +65,7 @@ class _MainPageState extends State<MainPage> {
       print("Settings registered: $settings");
     });
     _firebaseMessaging.getToken().then((String token) {
-      assert(token != null);
-      setState(() {
-        _homeScreenText = "Push Messaging token: $token";
-      });
-      print(_homeScreenText);
+      print(token);
     });
 
     super.initState();
@@ -80,6 +73,8 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    final updatedTime =
+        (!this.isLoadingGovApi ? _coronaData.updateDateTime : '');
     return Scaffold(
         appBar: AppBar(
           elevation: 5.0,
@@ -125,8 +120,7 @@ class _MainPageState extends State<MainPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                              'Sri Lanka Health Promotion Bureau - @ ' +
-                                  _coronaData.updateDateTime,
+                              'Sri Lanka Health Promotion Bureau - @  $updatedTime',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w600,
@@ -243,24 +237,36 @@ class _MainPageState extends State<MainPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('Grid Of Total Cases',
-                                  style: TextStyle(color: Colors.blue)),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Padding(padding: EdgeInsets.only(bottom: 4.0)),
-                      TimeSeriesPersonChart(_createCasesData())
-                    ],
+                    children: !isLoadingGovApi
+                        ? <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ],
+                            ),
+                          ]
+                        : <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text('Grid Of Total Cases',
+                                        style: TextStyle(color: Colors.blue)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Padding(padding: EdgeInsets.only(bottom: 4.0)),
+                            TimeSeriesPersonChart(_createCasesData())
+                          ],
                   )),
             ),
 
@@ -465,14 +471,22 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _fetchCoronaCounts() {
+    setState(() {
+      this.isLoadStatApi = false;
+    });
     new ApiService().fetchCoronaData().then((Data value) {
       setState(() {
         this._coronaData = value;
+        this.isLoadingGovApi = true;
       });
     });
   }
 
   void _fetchCoronaStats() {
+    setState(() {
+      this.isLoadingGovApi = false;
+    });
+
     new ApiService().fetchCoronaStat().then((List<Records> value) {
       List<TimeSeriesCount> casesdata = new List<TimeSeriesCount>();
       List<TimeSeriesCount> deathsdata = new List<TimeSeriesCount>();
@@ -494,6 +508,7 @@ class _MainPageState extends State<MainPage> {
           this._coronaDailyCases = casesdata;
           this._coronaDailyDeaths = deathsdata;
           this._coronaDailyRecovers = recoversdata;
+          this.isLoadingGovApi = true;
         });
       }
     });
