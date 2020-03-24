@@ -2,7 +2,7 @@ import 'package:dashboard/classes/corona_result.dart';
 import 'package:dashboard/classes/stat-result.dart';
 import 'package:dashboard/classes/time_series_count.dart';
 import 'package:dashboard/utils/api_service.dart';
-import 'package:dashboard/widgets/simple_time_seriesc_chart%20.dart';
+import 'package:dashboard/widgets/simple_time_seriesc_chart.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
