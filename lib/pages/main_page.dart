@@ -41,6 +41,7 @@ class _MainPageState extends State<MainPage> {
     _fetchCoronaStats();
     _fetchCoronaCounts();
 
+    _firebaseMessaging.subscribeToTopic('allUsers');
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         _fetchCoronaCounts();
@@ -78,7 +79,7 @@ class _MainPageState extends State<MainPage> {
         appBar: AppBar(
           elevation: 5.0,
           backgroundColor: Colors.white,
-          title: Text('SriLanka Health Info',
+          title: Text('Sri Lanka Health Info',
               style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w600,
