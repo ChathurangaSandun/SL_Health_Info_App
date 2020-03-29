@@ -10,19 +10,18 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'shop_items_page.dart';
 
-class MainPage extends StatefulWidget {
+class LocalTab extends StatefulWidget {
   final Data coronaData;
   final bool isLoadingGovApi;
-  MainPage({this.coronaData, this.isLoadingGovApi});
+  LocalTab({this.coronaData, this.isLoadingGovApi});
 
   @override
-  _MainPageState createState() => _MainPageState();
+  _LocalTabState createState() => _LocalTabState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _LocalTabState extends State<LocalTab> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   String _messageText = "";
-
   bool isLoadStatApi = false;
   String updatedTime = '';
 

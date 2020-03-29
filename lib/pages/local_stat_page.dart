@@ -13,9 +13,15 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
-    bool _isLoadingGovApi = false;
-    Data  coronaData = Data();
-  List<Widget> _children() => [MainPage(coronaData:coronaData,isLoadingGovApi: _isLoadingGovApi,), Text("Teb 2")];
+  bool _isLoadingGovApi = false;
+  Data coronaData = Data();
+  List<Widget> _children() => [
+        LocalTab(
+          coronaData: coronaData,
+          isLoadingGovApi: _isLoadingGovApi,
+        ),
+        Text("Teb 2")
+      ];
 
   @override
   void initState() {
@@ -51,13 +57,14 @@ class _HomeState extends State<Home> {
       _currentIndex = value;
     });
   }
+
   void _fetchCoronaCounts() {
     setState(() {
       _isLoadingGovApi = false;
     });
     new ApiService().fetchCoronaData().then((Data value) {
       setState(() {
-        this.coronaData = value;        
+        this.coronaData = value;
         this._isLoadingGovApi = true;
       });
     });

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pages/main_page.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'pages/home_page.dart';
+import 'package:dashboard/pages/local_stat_page.dart';
 
 
 void main() => runApp(MyApp());
