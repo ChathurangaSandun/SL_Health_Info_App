@@ -1,5 +1,5 @@
 import 'package:dashboard/classes/corona_result.dart';
-import 'package:dashboard/pages/main_page.dart';
+import 'package:dashboard/pages/local_tab.dart';
 import 'package:dashboard/utils/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:dashboard/widgets/bar-item.dart';

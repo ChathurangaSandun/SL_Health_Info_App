@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dashboard/pages/local_stat_page.dart';
+import 'package:dashboard/pages/home_page.dart';
 
 
 void main() => runApp(MyApp());
