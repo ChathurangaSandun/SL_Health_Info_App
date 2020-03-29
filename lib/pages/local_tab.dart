@@ -89,7 +89,7 @@ class _LocalTabState extends State<LocalTab> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text('Sri Lanka Health Promotion Bureau - @$updatedTime',
+                      Text('Sri Lanka Health Promotion Bureau - @'+ widget.coronaData.updateDateTime,
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w600,

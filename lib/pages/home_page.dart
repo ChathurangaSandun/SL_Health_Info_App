@@ -1,8 +1,10 @@
 import 'package:dashboard/classes/corona_result.dart';
 import 'package:dashboard/pages/local_tab.dart';
+import 'package:dashboard/pages/shop_items_page.dart';
 import 'package:dashboard/utils/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:dashboard/widgets/bar-item.dart';
+import 'package:dashboard/pages/global_tab.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -20,7 +22,7 @@ class _HomeState extends State<Home> {
           coronaData: coronaData,
           isLoadingGovApi: _isLoadingGovApi,
         ),
-        Text("Teb 2")
+        GlobalTab(coronaData:coronaData)
       ];
 
   @override
@@ -34,7 +36,11 @@ class _HomeState extends State<Home> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+             Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => ShopItemsPage()));
+
+        },
         tooltip: 'Info',
         child: Icon(Icons.info_outline),
         elevation: 7.0,
