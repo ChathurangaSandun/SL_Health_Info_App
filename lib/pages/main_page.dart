@@ -76,166 +76,260 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 5.0,
-          backgroundColor: Colors.white,
-          title: Text('Sri Lanka Health Info',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 20.0)),
-          actions: <Widget>[
-            // Container(
-            //   margin: EdgeInsets.only(right: 8.0),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: <Widget>[
-            //       Text(_coronaData.updateDateTime,
-            //           style: TextStyle(
-            //               color: Colors.blue,
-            //               fontWeight: FontWeight.w700,
-            //               fontSize: 14.0)),
-            //     ],
-            //   ),
-            // )
-          ],
-        ),
         body: StaggeredGridView.count(
-          crossAxisCount: 2,
-          crossAxisSpacing: 12.0,
-          mainAxisSpacing: 12.0,
-          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-          children: <Widget>[
-            // time
-            _buildTile(
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                              'Sri Lanka Health Promotion Bureau - @$updatedTime',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 13.0)),
-                        ],
-                      ),
-                    ]),
-              ),
-            ),
-            SizedBox(height: 20),
-            // new cases
-            _buildTile(
-              Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
+      crossAxisCount: 2,
+      crossAxisSpacing: 16.0,
+      mainAxisSpacing: 16.0,
+      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 36.0),
+      children: <Widget>[
+        // time
+        _buildTile(
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Material(
-                          color: Colors.blue[600],
-                          shape: CircleBorder(),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Icon(Icons.local_hospital,
-                                color: Colors.white, size: 24.0),
-                          )),
-                      Padding(padding: EdgeInsets.only(bottom: 16.0)),
-                      Text('New Cases',
+                      Text('Sri Lanka Health Promotion Bureau - @$updatedTime',
                           style: TextStyle(
-                              color: Colors.blue[700],
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20.0)),
-                      Text(_coronaData.localNewCases.toString(),
-                          style: TextStyle(
-                              color: Colors.blue[700],
-                              fontWeight: FontWeight.w900,
-                              fontSize: 36.0))
-                    ]),
-              ),
-            ),
-
-            // new deths
-            _buildTile(
-              Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Material(
-                          color: Colors.red[600],
-                          shape: CircleBorder(),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Icon(Icons.airline_seat_flat,
-                                color: Colors.white, size: 24.0),
-                          )),
-                      Padding(padding: EdgeInsets.only(bottom: 16.0)),
-                      Text('New Deaths',
-                          style: TextStyle(
-                              color: Colors.red[700],
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20.0)),
-                      Text(_coronaData.localNewDeaths.toString(),
-                          style: TextStyle(
-                              color: Colors.red[700],
-                              fontWeight: FontWeight.w900,
-                              fontSize: 36.0))
-                    ]),
-              ),
-            ),
-            SizedBox(height: 20),
-
-            // total cases
-            _buildTile(
-              Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('Total Cases',
-                              style: TextStyle(
-                                  color: Colors.blue[700],
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20.0)),
-                          Text(_coronaData.localTotalCases.toString(),
-                              style: TextStyle(
-                                  color: Colors.blue[700],
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 36.0))
-                        ],
-                      ),
-                      Material(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13.0)),
+                    ],
+                  ),
+                ]),
+          ),
+        ),
+        //SizedBox(height: 20),
+        // new cases
+        _buildTile(
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Material(
+                      color: Colors.blue[600],
+                      shape: CircleBorder(),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Icon(Icons.local_hospital,
+                            color: Colors.white, size: 24.0),
+                      )),
+                  Padding(padding: EdgeInsets.only(bottom: 16.0)),
+                  Text('New Cases',
+                      style: TextStyle(
                           color: Colors.blue[700],
-                          borderRadius: BorderRadius.circular(24.0),
-                          child: Center(
-                              child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Icon(Icons.local_hospital,
-                                color: Colors.white, size: 30.0),
-                          )))
-                    ]),
-              ),
-            ),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20.0)),
+                  Text(_coronaData.localNewCases.toString(),
+                      style: TextStyle(
+                          color: Colors.blue[700],
+                          fontWeight: FontWeight.w900,
+                          fontSize: 36.0))
+                ]),
+          ),
+        ),
 
-            _buildTile(
-              Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+        // new deths
+        _buildTile(
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Material(
+                      color: Colors.red[600],
+                      shape: CircleBorder(),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Icon(Icons.airline_seat_flat,
+                            color: Colors.white, size: 24.0),
+                      )),
+                  Padding(padding: EdgeInsets.only(bottom: 16.0)),
+                  Text('New Deaths',
+                      style: TextStyle(
+                          color: Colors.red[700],
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20.0)),
+                  Text(_coronaData.localNewDeaths.toString(),
+                      style: TextStyle(
+                          color: Colors.red[700],
+                          fontWeight: FontWeight.w900,
+                          fontSize: 36.0))
+                ]),
+          ),
+        ),
+        //SizedBox(height: 20),
+
+        // total cases
+        _buildTile(
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text('Total Cases',
+                          style: TextStyle(
+                              color: Colors.blue[700],
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20.0)),
+                      Text(_coronaData.localTotalCases.toString(),
+                          style: TextStyle(
+                              color: Colors.blue[700],
+                              fontWeight: FontWeight.w900,
+                              fontSize: 36.0))
+                    ],
+                  ),
+                  Material(
+                      color: Colors.blue[700],
+                      borderRadius: BorderRadius.circular(24.0),
+                      child: Center(
+                          child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Icon(Icons.local_hospital,
+                            color: Colors.white, size: 30.0),
+                      )))
+                ]),
+          ),
+        ),
+
+        _buildTile(
+          Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: !isLoadingGovApi
+                    ? <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ],
+                        ),
+                      ]
+                    : <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text('Grid Of Total Cases',
+                                    style: TextStyle(color: Colors.blue)),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Padding(padding: EdgeInsets.only(bottom: 4.0)),
+                        TimeSeriesPersonChart(_createCasesData())
+                      ],
+              )),
+        ),
+
+        //SizedBox(height: 20),
+        // current active cases
+        _buildTile(
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text('Current Active Cases',
+                          style: TextStyle(
+                              color: Colors.purple[800],
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20.0)),
+                      Text(_coronaData.localActiveCases.toString(),
+                          style: TextStyle(
+                              color: Colors.purple[800],
+                              fontWeight: FontWeight.w900,
+                              fontSize: 36.0))
+                    ],
+                  ),
+                  Material(
+                      color: Colors.purple[800],
+                      borderRadius: BorderRadius.circular(24.0),
+                      child: Center(
+                          child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Icon(Icons.airline_seat_flat_angled,
+                            color: Colors.white, size: 30.0),
+                      )))
+                ]),
+          ),
+        ),
+
+        //SizedBox(height: 20),
+
+        // total deths
+        _buildTile(
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text('Total Deaths',
+                          style: TextStyle(
+                              color: Colors.red[700],
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20.0)),
+                      Text(_coronaData.localDeaths.toString(),
+                          style: TextStyle(
+                              color: Colors.red[700],
+                              fontWeight: FontWeight.w900,
+                              fontSize: 36.0))
+                    ],
+                  ),
+                  Material(
+                      color: Colors.red[700],
+                      borderRadius: BorderRadius.circular(24.0),
+                      child: Center(
+                          child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Icon(Icons.airline_seat_flat,
+                            color: Colors.white, size: 30.0),
+                      )))
+                ]),
+          ),
+        ),
+
+        _buildTile(
+          Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: !isLoadingGovApi
                         ? <Widget>[
@@ -250,323 +344,195 @@ class _MainPageState extends State<MainPage> {
                             ),
                           ]
                         : <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text('Grid Of Total Cases',
-                                        style: TextStyle(color: Colors.blue)),
-                                  ],
+                                Text('Grid Of Total Deaths',
+                                    style: TextStyle(color: Colors.red)),
+                              ],
+                            ),
+                          ],
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 4.0)),
+                  TimeSeriesPersonChart(_createDeathsData())
+                ],
+              )),
+        ),
+
+        //SizedBox(height: 20),
+        // total recovered
+        _buildTile(
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text('Total Recovered',
+                          style: TextStyle(
+                              color: Colors.green[700],
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20.0)),
+                      Text(_coronaData.localRecovered.toString(),
+                          style: TextStyle(
+                              color: Colors.green[700],
+                              fontWeight: FontWeight.w900,
+                              fontSize: 36.0))
+                    ],
+                  ),
+                  Material(
+                      color: Colors.green[700],
+                      borderRadius: BorderRadius.circular(24.0),
+                      child: Center(
+                          child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Icon(Icons.accessibility_new,
+                            color: Colors.white, size: 30.0),
+                      )))
+                ]),
+          ),
+        ),
+
+        _buildTile(
+          Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: !isLoadingGovApi
+                        ? <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Center(
+                                  child: CircularProgressIndicator(),
                                 ),
                               ],
                             ),
-                            Padding(padding: EdgeInsets.only(bottom: 4.0)),
-                            TimeSeriesPersonChart(_createCasesData())
+                          ]
+                        : <Widget>[
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text('Grid Of Total Recovers',
+                                    style: TextStyle(color: Colors.green)),
+                              ],
+                            ),
                           ],
-                  )),
-            ),
+                  ),
+                  Padding(padding: EdgeInsets.only(bottom: 4.0)),
+                  TimeSeriesPersonChart(_createRecoversData())
+                ],
+              )),
+        ),
 
-            SizedBox(height: 20),
-            // current active cases
-            _buildTile(
-              Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('Current Active Cases',
-                              style: TextStyle(
-                                  color: Colors.purple[800],
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20.0)),
-                          Text(_coronaData.localActiveCases.toString(),
-                              style: TextStyle(
-                                  color: Colors.purple[800],
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 36.0))
-                        ],
-                      ),
-                      Material(
-                          color: Colors.purple[800],
-                          borderRadius: BorderRadius.circular(24.0),
-                          child: Center(
-                              child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Icon(Icons.airline_seat_flat_angled,
-                                color: Colors.white, size: 30.0),
-                          )))
-                    ]),
-              ),
-            ),
-
-            SizedBox(height: 20),
-
-            // total deths
-            _buildTile(
-              Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('Total Deaths',
-                              style: TextStyle(
-                                  color: Colors.red[700],
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20.0)),
-                          Text(_coronaData.localDeaths.toString(),
-                              style: TextStyle(
-                                  color: Colors.red[700],
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 36.0))
-                        ],
-                      ),
-                      Material(
-                          color: Colors.red[700],
-                          borderRadius: BorderRadius.circular(24.0),
-                          child: Center(
-                              child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Icon(Icons.airline_seat_flat,
-                                color: Colors.white, size: 30.0),
-                          )))
-                    ]),
-              ),
-            ),
-
-            _buildTile(
-              Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+        //SizedBox(height: 20),
+        // total Individuals In Hospitals
+        _buildTile(
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: !isLoadingGovApi
-                            ? <Widget>[
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  ],
-                                ),
-                              ]
-                            : <Widget>[
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text('Grid Of Total Deaths',
-                                        style: TextStyle(color: Colors.red)),
-                                  ],
-                                ),
-                              ],
-                      ),
-                      Padding(padding: EdgeInsets.only(bottom: 4.0)),
-                      TimeSeriesPersonChart(_createDeathsData())
+                      Text('Total Individuals In Hospitals',
+                          style: TextStyle(
+                              color: Colors.yellow[800],
+                              fontWeight: FontWeight.w700,
+                              fontSize: 20.0)),
+                      Text(
+                          _coronaData.localTotalNumberOfIndividualsInHospitals
+                              .toString(),
+                          style: TextStyle(
+                              color: Colors.yellow[800],
+                              fontWeight: FontWeight.w900,
+                              fontSize: 36.0))
                     ],
-                  )),
-            ),
+                  ),
+                  Material(
+                      color: Colors.yellow[800],
+                      borderRadius: BorderRadius.circular(24.0),
+                      child: Center(
+                          child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Icon(Icons.airline_seat_individual_suite,
+                            color: Colors.white, size: 30.0),
+                      )))
+                ]),
+          ),
+        ),
 
-            SizedBox(height: 20),
-            // total recovered
-            _buildTile(
-              Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('Total Recovered',
-                              style: TextStyle(
-                                  color: Colors.green[700],
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20.0)),
-                          Text(_coronaData.localRecovered.toString(),
-                              style: TextStyle(
-                                  color: Colors.green[700],
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 36.0))
-                        ],
-                      ),
-                      Material(
-                          color: Colors.green[700],
-                          borderRadius: BorderRadius.circular(24.0),
-                          child: Center(
-                              child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Icon(Icons.accessibility_new,
-                                color: Colors.white, size: 30.0),
-                          )))
-                    ]),
-              ),
-            ),
-
-            _buildTile(
-              Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+        _buildTile(
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: !isLoadingGovApi
-                            ? <Widget>[
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  ],
-                                ),
-                              ]
-                            : <Widget>[
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text('Grid Of Total Recovers',
-                                        style: TextStyle(color: Colors.green)),
-                                  ],
-                                ),
-                              ],
-                      ),
-                      Padding(padding: EdgeInsets.only(bottom: 4.0)),
-                      TimeSeriesPersonChart(_createRecoversData())
+                      Text('Shop Items',
+                          style: TextStyle(color: Colors.redAccent)),
+                      Text('173',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 34.0))
                     ],
-                  )),
-            ),
-
-            SizedBox(height: 20),
-            // total Individuals In Hospitals
-            _buildTile(
-              Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('Total Individuals In Hospitals',
-                              style: TextStyle(
-                                  color: Colors.yellow[800],
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20.0)),
-                          Text(
-                              _coronaData
-                                  .localTotalNumberOfIndividualsInHospitals
-                                  .toString(),
-                              style: TextStyle(
-                                  color: Colors.yellow[800],
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 36.0))
-                        ],
-                      ),
-                      Material(
-                          color: Colors.yellow[800],
-                          borderRadius: BorderRadius.circular(24.0),
-                          child: Center(
-                              child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Icon(Icons.airline_seat_individual_suite,
-                                color: Colors.white, size: 30.0),
-                          )))
-                    ]),
-              ),
-            ),
-
-            _buildTile(
-              Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('Shop Items',
-                              style: TextStyle(color: Colors.redAccent)),
-                          Text('173',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 34.0))
-                        ],
-                      ),
-                      Material(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(24.0),
-                          child: Center(
-                              child: Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Icon(Icons.store,
-                                color: Colors.white, size: 30.0),
-                          )))
-                    ]),
-              ),
-              onTap: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => ShopItemsPage())),
-            )
-          ],
-          staggeredTiles: [
-            StaggeredTile.extent(2, 40.0),
-            StaggeredTile.extent(2, 15.0),
-            StaggeredTile.extent(1, 200.0),
-            StaggeredTile.extent(1, 200.0),
-            StaggeredTile.extent(2, 10.0),
-            StaggeredTile.extent(2, 150.0),
-            StaggeredTile.extent(2, 250.0),
-            StaggeredTile.extent(2, 10.0),
-            StaggeredTile.extent(2, 150.0),
-            StaggeredTile.extent(2, 10.0),
-            StaggeredTile.extent(2, 150.0),
-            StaggeredTile.extent(2, 250.0),
-            StaggeredTile.extent(2, 10.0),
-            StaggeredTile.extent(2, 150.0),
-            StaggeredTile.extent(2, 250.0),
-            StaggeredTile.extent(2, 10.0),
-            StaggeredTile.extent(2, 150.0),
-            //StaggeredTile.extent(2, 110.0),
-          ],
-        ));
+                  ),
+                  Material(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(24.0),
+                      child: Center(
+                          child: Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child:
+                            Icon(Icons.store, color: Colors.white, size: 30.0),
+                      )))
+                ]),
+          ),
+          onTap: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => ShopItemsPage())),
+        )
+      ],
+      staggeredTiles: [
+        StaggeredTile.extent(2, 40.0),
+        StaggeredTile.extent(1, 200.0),
+        StaggeredTile.extent(1, 200.0),
+        StaggeredTile.extent(2, 150.0),
+        StaggeredTile.extent(2, 250.0),
+        StaggeredTile.extent(2, 150.0),
+        StaggeredTile.extent(2, 150.0),
+        StaggeredTile.extent(2, 250.0),
+        StaggeredTile.extent(2, 150.0),
+        StaggeredTile.extent(2, 250.0),
+        StaggeredTile.extent(2, 150.0),
+      ],
+    ));
   }
 
   Widget _buildTile(Widget child, {Function() onTap}) {
     return Material(
-        elevation: 14.0,
-        borderRadius: BorderRadius.circular(12.0),
-        shadowColor: Color(0x802196F3),
+        elevation: 5.0,
+        borderRadius: BorderRadius.circular(4.0),
+        //shadowColor: Color(0x802196F3),
         child: InkWell(
             // Do onTap() if it isn't null, otherwise do print()
             onTap: onTap != null
