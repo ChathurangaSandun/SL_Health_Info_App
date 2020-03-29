@@ -11,6 +11,10 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'shop_items_page.dart';
 
 class MainPage extends StatefulWidget {
+  final Data coronaData;
+  final bool isLoadingGovApi;
+  MainPage({this.coronaData, this.isLoadingGovApi});
+
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -18,33 +22,25 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   String _messageText = "";
-  bool isLoadingGovApi = false;
+
   bool isLoadStatApi = false;
   String updatedTime = '';
 
-  Data _coronaData = new Data();
   List<TimeSeriesCount> _coronaDailyCases = new List<TimeSeriesCount>();
   List<TimeSeriesCount> _coronaDailyDeaths = new List<TimeSeriesCount>();
   List<TimeSeriesCount> _coronaDailyRecovers = new List<TimeSeriesCount>();
-
-  static final List<String> chartDropdownItems = [
-    'Last 7 days',
-    'Last month',
-    'Last year'
-  ];
-  String actualDropdown = chartDropdownItems[0];
-  int actualChart = 0;
 
   @override
   void initState() {
     // call to get data from rest api
     _fetchCoronaStats();
-    _fetchCoronaCounts();
+    //_fetchCoronaCounts();
 
     _firebaseMessaging.subscribeToTopic('allUsers');
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
-        _fetchCoronaCounts();
+        //_fetchCoronaCounts();
+        print("get notificaiton");
       },
       onLaunch: (Map<String, dynamic> message) async {
         setState(() {
@@ -127,7 +123,10 @@ class _MainPageState extends State<MainPage> {
                           color: Colors.blue[700],
                           fontWeight: FontWeight.w700,
                           fontSize: 20.0)),
-                  Text(_coronaData.localNewCases.toString(),
+                  Text(
+                      widget.coronaData.localNewCases == null
+                          ? 0.toString()
+                          : widget.coronaData.localNewCases.toString(),
                       style: TextStyle(
                           color: Colors.blue[700],
                           fontWeight: FontWeight.w900,
@@ -158,7 +157,10 @@ class _MainPageState extends State<MainPage> {
                           color: Colors.red[700],
                           fontWeight: FontWeight.w700,
                           fontSize: 20.0)),
-                  Text(_coronaData.localNewDeaths.toString(),
+                  Text(
+                      widget.coronaData.localNewDeaths == null
+                          ? 0.toString()
+                          : widget.coronaData.localNewDeaths.toString(),
                       style: TextStyle(
                           color: Colors.red[700],
                           fontWeight: FontWeight.w900,
@@ -185,7 +187,10 @@ class _MainPageState extends State<MainPage> {
                               color: Colors.blue[700],
                               fontWeight: FontWeight.w700,
                               fontSize: 20.0)),
-                      Text(_coronaData.localTotalCases.toString(),
+                      Text(
+                          widget.coronaData.localTotalCases == null
+                              ? 0.toString()
+                              : widget.coronaData.localTotalCases.toString(),
                           style: TextStyle(
                               color: Colors.blue[700],
                               fontWeight: FontWeight.w900,
@@ -211,7 +216,7 @@ class _MainPageState extends State<MainPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: !isLoadingGovApi
+                children: !this.isLoadStatApi
                     ? <Widget>[
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -262,7 +267,10 @@ class _MainPageState extends State<MainPage> {
                               color: Colors.purple[800],
                               fontWeight: FontWeight.w700,
                               fontSize: 20.0)),
-                      Text(_coronaData.localActiveCases.toString(),
+                      Text(
+                          widget.coronaData.localActiveCases == null
+                              ? 0.toString()
+                              : widget.coronaData.localActiveCases.toString(),
                           style: TextStyle(
                               color: Colors.purple[800],
                               fontWeight: FontWeight.w900,
@@ -301,7 +309,10 @@ class _MainPageState extends State<MainPage> {
                               color: Colors.red[700],
                               fontWeight: FontWeight.w700,
                               fontSize: 20.0)),
-                      Text(_coronaData.localDeaths.toString(),
+                      Text(
+                          widget.coronaData.localDeaths == null
+                              ? 0.toString()
+                              : widget.coronaData.localDeaths.toString(),
                           style: TextStyle(
                               color: Colors.red[700],
                               fontWeight: FontWeight.w900,
@@ -331,7 +342,7 @@ class _MainPageState extends State<MainPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: !isLoadingGovApi
+                    children: !this.isLoadStatApi
                         ? <Widget>[
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -378,7 +389,10 @@ class _MainPageState extends State<MainPage> {
                               color: Colors.green[700],
                               fontWeight: FontWeight.w700,
                               fontSize: 20.0)),
-                      Text(_coronaData.localRecovered.toString(),
+                      Text(
+                          widget.coronaData.localRecovered == null
+                              ? 0.toString()
+                              : widget.coronaData.localRecovered.toString(),
                           style: TextStyle(
                               color: Colors.green[700],
                               fontWeight: FontWeight.w900,
@@ -408,7 +422,7 @@ class _MainPageState extends State<MainPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: !isLoadingGovApi
+                    children: !this.isLoadStatApi
                         ? <Widget>[
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -456,8 +470,17 @@ class _MainPageState extends State<MainPage> {
                               fontWeight: FontWeight.w700,
                               fontSize: 20.0)),
                       Text(
-                          _coronaData.localTotalNumberOfIndividualsInHospitals
-                              .toString(),
+                          this
+                                      .widget
+                                      .coronaData
+                                      .localTotalNumberOfIndividualsInHospitals ==
+                                  null
+                              ? 0.toString()
+                              : this
+                                  .widget
+                                  .coronaData
+                                  .localTotalNumberOfIndividualsInHospitals
+                                  .toString(),
                           style: TextStyle(
                               color: Colors.yellow[800],
                               fontWeight: FontWeight.w900,
@@ -543,22 +566,9 @@ class _MainPageState extends State<MainPage> {
             child: child));
   }
 
-  void _fetchCoronaCounts() {
-    setState(() {
-      this.isLoadStatApi = false;
-    });
-    new ApiService().fetchCoronaData().then((Data value) {
-      setState(() {
-        this._coronaData = value;
-        this.updatedTime = value.updateDateTime;
-        this.isLoadingGovApi = true;
-      });
-    });
-  }
-
   void _fetchCoronaStats() {
     setState(() {
-      this.isLoadingGovApi = false;
+      this.isLoadStatApi = false;
     });
 
     new ApiService().fetchCoronaStat().then((List<Records> value) {
@@ -582,7 +592,7 @@ class _MainPageState extends State<MainPage> {
           this._coronaDailyCases = casesdata;
           this._coronaDailyDeaths = deathsdata;
           this._coronaDailyRecovers = recoversdata;
-          this.isLoadingGovApi = true;
+          this.isLoadStatApi = true;
         });
       }
     });
