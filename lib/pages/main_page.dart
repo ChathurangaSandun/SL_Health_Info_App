@@ -271,6 +271,44 @@ class _MainPageState extends State<MainPage> {
             ),
 
             SizedBox(height: 20),
+            // current active cases
+            _buildTile(
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text('Current Active Cases',
+                              style: TextStyle(
+                                  color: Colors.purple[800],
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20.0)),
+                          Text(_coronaData.localActiveCases.toString(),
+                              style: TextStyle(
+                                  color: Colors.purple[800],
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 36.0))
+                        ],
+                      ),
+                      Material(
+                          color: Colors.purple[800],
+                          borderRadius: BorderRadius.circular(24.0),
+                          child: Center(
+                              child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Icon(Icons.airline_seat_flat_angled,
+                                color: Colors.white, size: 30.0),
+                          )))
+                    ]),
+              ),
+            ),
+
+            SizedBox(height: 20),
 
             // total deths
             _buildTile(
@@ -289,7 +327,7 @@ class _MainPageState extends State<MainPage> {
                                   color: Colors.red[700],
                                   fontWeight: FontWeight.w700,
                                   fontSize: 20.0)),
-                          Text(_coronaData.localNewDeaths.toString(),
+                          Text(_coronaData.localDeaths.toString(),
                               style: TextStyle(
                                   color: Colors.red[700],
                                   fontWeight: FontWeight.w900,
@@ -425,6 +463,47 @@ class _MainPageState extends State<MainPage> {
                   )),
             ),
 
+            SizedBox(height: 20),
+            // total Individuals In Hospitals
+            _buildTile(
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text('Total Individuals In Hospitals',
+                              style: TextStyle(
+                                  color: Colors.yellow[800],
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20.0)),
+                          Text(
+                              _coronaData
+                                  .localTotalNumberOfIndividualsInHospitals
+                                  .toString(),
+                              style: TextStyle(
+                                  color: Colors.yellow[800],
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 36.0))
+                        ],
+                      ),
+                      Material(
+                          color: Colors.yellow[800],
+                          borderRadius: BorderRadius.circular(24.0),
+                          child: Center(
+                              child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Icon(Icons.airline_seat_individual_suite,
+                                color: Colors.white, size: 30.0),
+                          )))
+                    ]),
+              ),
+            ),
+
             _buildTile(
               Padding(
                 padding: const EdgeInsets.all(24.0),
@@ -467,13 +546,17 @@ class _MainPageState extends State<MainPage> {
             StaggeredTile.extent(1, 200.0),
             StaggeredTile.extent(2, 10.0),
             StaggeredTile.extent(2, 150.0),
-            StaggeredTile.extent(2, 220.0),
+            StaggeredTile.extent(2, 250.0),
+            StaggeredTile.extent(2, 10.0),
+            StaggeredTile.extent(2, 150.0),
             StaggeredTile.extent(2, 10.0),
             StaggeredTile.extent(2, 150.0),
             StaggeredTile.extent(2, 250.0),
             StaggeredTile.extent(2, 10.0),
             StaggeredTile.extent(2, 150.0),
             StaggeredTile.extent(2, 250.0),
+            StaggeredTile.extent(2, 10.0),
+            StaggeredTile.extent(2, 150.0),
             //StaggeredTile.extent(2, 110.0),
           ],
         ));

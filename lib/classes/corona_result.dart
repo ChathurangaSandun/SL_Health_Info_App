@@ -26,9 +26,11 @@ class Data {
   String updateDateTime;
   int localNewCases;
   int localTotalCases;
+  int localTotalNumberOfIndividualsInHospitals;
   int localDeaths;
   int localNewDeaths;
   int localRecovered;
+  int localActiveCases;
   int globalNewCases;
   int globalTotalCases;
   int globalDeaths;
@@ -40,9 +42,11 @@ class Data {
       {this.updateDateTime,
       this.localNewCases,
       this.localTotalCases,
+      this.localTotalNumberOfIndividualsInHospitals,
       this.localDeaths,
       this.localNewDeaths,
       this.localRecovered,
+      this.localActiveCases,
       this.globalNewCases,
       this.globalTotalCases,
       this.globalDeaths,
@@ -54,9 +58,12 @@ class Data {
     updateDateTime = json['update_date_time'];
     localNewCases = json['local_new_cases'];
     localTotalCases = json['local_total_cases'];
+    localTotalNumberOfIndividualsInHospitals =
+        json['local_total_number_of_individuals_in_hospitals'];
     localDeaths = json['local_deaths'];
     localNewDeaths = json['local_new_deaths'];
     localRecovered = json['local_recovered'];
+    localActiveCases = json['local_active_cases'];
     globalNewCases = json['global_new_cases'];
     globalTotalCases = json['global_total_cases'];
     globalDeaths = json['global_deaths'];
@@ -75,9 +82,12 @@ class Data {
     data['update_date_time'] = this.updateDateTime;
     data['local_new_cases'] = this.localNewCases;
     data['local_total_cases'] = this.localTotalCases;
+    data['local_total_number_of_individuals_in_hospitals'] =
+        this.localTotalNumberOfIndividualsInHospitals;
     data['local_deaths'] = this.localDeaths;
     data['local_new_deaths'] = this.localNewDeaths;
     data['local_recovered'] = this.localRecovered;
+    data['local_active_cases'] = this.localActiveCases;
     data['global_new_cases'] = this.globalNewCases;
     data['global_total_cases'] = this.globalTotalCases;
     data['global_deaths'] = this.globalDeaths;
@@ -158,16 +168,26 @@ class HospitalData {
 class Hospital {
   int id;
   String name;
+  String nameSi;
+  String nameTa;
   String createdAt;
   String updatedAt;
   Null deletedAt;
 
   Hospital(
-      {this.id, this.name, this.createdAt, this.updatedAt, this.deletedAt});
+      {this.id,
+      this.name,
+      this.nameSi,
+      this.nameTa,
+      this.createdAt,
+      this.updatedAt,
+      this.deletedAt});
 
   Hospital.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    nameSi = json['name_si'];
+    nameTa = json['name_ta'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
@@ -177,6 +197,8 @@ class Hospital {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
+    data['name_si'] = this.nameSi;
+    data['name_ta'] = this.nameTa;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     data['deleted_at'] = this.deletedAt;
