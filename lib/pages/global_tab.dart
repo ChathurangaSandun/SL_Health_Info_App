@@ -18,6 +18,7 @@ class _GlobalTabState extends State<GlobalTab> {
 
   @override
   Widget build(BuildContext context) {
+    final updateTime = widget.coronaData == null ? "" : widget.coronaData.updateDateTime;
     return Scaffold(
         body: StaggeredGridView.count(
       crossAxisCount: 2,
@@ -37,7 +38,7 @@ class _GlobalTabState extends State<GlobalTab> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Text('Sri Lanka Health Promotion Bureau - @'+ widget.coronaData.updateDateTime,
+                      Text('Sri Lanka Health Promotion Bureau - @'+  ( (updateTime =='') ? '': updateTime),
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w600,

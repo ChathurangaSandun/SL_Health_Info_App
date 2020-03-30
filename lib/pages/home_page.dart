@@ -22,7 +22,7 @@ class _HomeState extends State<Home> {
           coronaData: coronaData,
           isLoadingGovApi: _isLoadingGovApi,
         ),
-        GlobalTab(coronaData:coronaData)
+        GlobalTab(coronaData: coronaData)
       ];
 
   @override
@@ -37,12 +37,12 @@ class _HomeState extends State<Home> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-             Navigator.of(context)
+          Navigator.of(context)
               .push(MaterialPageRoute(builder: (_) => ShopItemsPage()));
-
         },
-        tooltip: 'Info',
-        child: Icon(Icons.info_outline),
+        tooltip: 'Contact Details',
+        backgroundColor: Colors.redAccent,
+        child: Icon(Icons.call),
         elevation: 7.0,
       ),
       body: _children()[_currentIndex],
