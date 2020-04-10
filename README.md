@@ -5,7 +5,7 @@ Introduced a live updated dashboard with Covid-19 Srilanka statistic and world s
 Prowered from [Health Pramote Bureau. covid updates API (https://hpb.health.gov.lk/en/api-documentation)](https://hpb.health.gov.lk/en/api-documentation)
 
 ## Google Playstore Link
-[](https://play.google.com/store/apps/details?id=com.clivekumara.situationsl)
+[(https://play.google.com/store/apps/details?id=com.clivekumara.situationsl)](https://play.google.com/store/apps/details?id=com.clivekumara.situationsl)
 ![](processed.jpeg)
 
 ## Technologies
